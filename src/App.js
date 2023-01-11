@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -7,6 +7,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   // const dummyMovies = [
   //   {
   //     id: 1,
@@ -22,11 +23,11 @@ function App() {
   //   }
   // ];
 
-  async function fetchapiMoviesHandle() {
+  const fetchapiMoviesHandle = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/filmss/");
+      const response = await fetch("https://swapi.dev/api/films/");
       if (!response.ok) {
         throw new Error("Something went wrong! ....Retrying");
       }
@@ -47,12 +48,16 @@ function App() {
       fetchapiMoviesHandle();
     }
     setIsLoading(false);
-  }
+  });
+
+  useEffect(() => {
+    fetchapiMoviesHandle();
+  }, []);
 
   return (
     <React.Fragment>
       <section>
-        <button onClick={fetchapiMoviesHandle}>Fetch Movies</button>
+        <button>Fetch Movies</button>
       </section>
       <section>
         {isLoading && <p>Loading...</p>}
