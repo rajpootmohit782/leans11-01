@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
+import { Form } from "./components/Form";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -24,7 +25,7 @@ function App() {
   // ];
 
   const fetchapiMoviesHandle = useCallback(async () => {
-    setIsLoading(true);
+    setIsLoading(false);
     setError(null);
     try {
       const response = await fetch("https://swapi.dev/api/films/");
@@ -57,6 +58,7 @@ function App() {
   return (
     <React.Fragment>
       <section>
+        <Form />
         <button>Fetch Movies</button>
       </section>
       <section>
